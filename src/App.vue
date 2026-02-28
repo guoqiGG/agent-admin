@@ -132,7 +132,8 @@ import {
   ArrowDown,
   SwitchButton,
   Fold,
-  Expand
+  Expand,
+  Star
 } from '@element-plus/icons-vue'
 
 import logo from './assets/logo.svg'
@@ -342,6 +343,79 @@ const toggleSidebar = () => {
   color: rgba(255, 255, 255, 0.6) !important;
 }
 
+/* 抖音点赞效果 */
+:deep(.sidebar .sidebar-nav .el-menu-item.menu-like) {
+  animation: menuLike 0.5s ease-in-out !important;
+}
+
+/* 爱心点赞图标 */
+:deep(.sidebar .sidebar-nav .el-menu-item .like-heart) {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  z-index: 1;
+  animation: heartBeat 0.5s ease-in-out;
+}
+
+.heart-icon {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  transform: rotate(-45deg);
+  background: linear-gradient(135deg, #ff4d4f, #ff7a9c);
+  animation: heartScale 0.5s ease-in-out;
+}
+
+.heart-icon::before,
+.heart-icon::after {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff4d4f, #ff7a9c);
+  position: absolute;
+}
+
+.heart-icon::before {
+  top: -10px;
+  left: 0;
+}
+
+.heart-icon::after {
+  top: 0;
+  left: 10px;
+}
+
+/* 爱心跳动动画 */
+@keyframes heartBeat {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
+/* 爱心缩放动画 */
+@keyframes heartScale {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 /* 主内容区 */
 .main-content {
   flex: 1;
@@ -368,6 +442,8 @@ const toggleSidebar = () => {
   justify-content: space-between;
   padding: 0 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1001;
+  position: relative;
 }
 
 .menu-toggle {
@@ -409,8 +485,8 @@ const toggleSidebar = () => {
   .sidebar {
     position: fixed;
     left: 0;
-    top: 0;
-    height: 100vh;
+    top: 60px;
+    height: calc(100vh - 60px);
     z-index: 1000;
   }
   
